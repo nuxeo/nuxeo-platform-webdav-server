@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D:multistatus xmlns:D="
+  DAV:">
+	<D:response>
+		<D:href>
+			http://192.168.1.1:8080/nuxeo/dav/default/default-domain/workspaces/ws1/?displayName=/WS1
+		</D:href>
+		<D:propstat>
+			<D:prop>
+				<D:getcontentlanguage>
+					en-us< /D:getcontentlanguage>
+					<D:parentname>workspaces</D:parentname>
+					<D:getlastmodified>
+						Tue, 16 Oct 2007 15:18:46 GMT
+					</D:getlastmodified>
+					<D:ishidden>0</D:ishidden>
+					<D:displayname>WS 1</D:displayname>
+					<D:iscollection>1</D:iscollection>
+					<D:resourcetype>
+						<D:collection />
+					</D:resourcetype>
+					<D:isreadonly>0</D:isreadonly>
+					<D:getcontentlength>294</D:getcontentlength>
+					<D:isroot>0</D:isroot>
+					<D:name>ws1</D:name>
+					<D:creationdate>
+						2007-10-16T15:18:46Z
+					</D:creationdate>
+			</D:prop>
+			<D:status>HTTP/1.1 200</D:status>
+		</D:propstat>
+		<D:propstat>
+			<D:prop>
+				< D:defaultdocument/>
+				<D:href />
+				<D:lastaccessed />
+				<D:isstructureddocument />
+				<D:contentclass />
+			</D:prop>
+			<D:status>HTTP/1.1 404</D:status>
+		</D:propstat>
+	</D:response>
+	<D:response>
+		<D:hr ef>
+			http://192.168.1.1:8080/nuxeo/dav/default/default-domain/workspaces/
+			</D:href>
+			<D:propstat>
+				<D:prop>
+					<D:getcontentlanguage>en-us</D:getcontentlanguage>
+					<D:parentname>default- domain</D:parentname>
+					<D:getlastmodified>
+						Wed, 19 Sep 2007 13:23:25 GMT
+					</D:getlastmodified>
+					<D:ishidden>0</D:ishidden>
+					<D:displayname>Workspaces</D:displayname>
+					<D:iscollection>1</D:iscollection>
+					<D:resourcetype>
+						<D:collection />
+					</D:resourcetype>
+					<D:isreadonly>0</D:isreadonly>
+					<D:getcontentlength>289</D:getcontentlength>
+					<D:isroot>0</D:isroot>
+					<D:name>wo rkspaces</D:name>
+					<D:creationdate>
+						2007-09-19T13:23:25Z
+					</D:creationdate>
+				</D:prop>
+				<D:status>HTTP/1.1 200</D:status>
+			</D:propstat>
+			<D:propstat>
+				<D:prop>
+					<D:defaultdocument />
+					<D:href />
+					<D:lastaccessed />
+					<D:isstructureddocument />
+					<D:contentclass />
+				</D:prop>
+				<D:status>HTTP/1.1 404</D:status>
+			</D:propstat>
+	</D:response>
+</D:multistatus>

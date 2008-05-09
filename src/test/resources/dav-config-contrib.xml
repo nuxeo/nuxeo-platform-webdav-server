@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.webdav.config.defaultContrib">
+
+  <extension target="org.nuxeo.ecm.platform.webdav.config.WebDavConfigurationService"
+      point="DavClientConfiguration">
+
+   <documentation>
+    Default configuration
+   </documentation>
+   <davClientConfiguration
+           name="default"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>false</useFileNameAsRessourceName>
+           <needFullURLs>false</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>This is the default, pattern will never be used</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+   <documentation>
+    Configuration for MS WebFolders (both versions) and WebDrive.
+   </documentation>
+   <davClientConfiguration
+           name="MSWebFolders"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>true</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>true</useFileNameAsRessourceName>
+           <needFullURLs>true</needFullURLs>
+           <needMSDavHeader>true</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>Microsoft-WebDAV</pattern>
+               <pattern>Microsoft Data Access Internet Publishing Provider</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+
+   <documentation>
+    Configuration for Konqueror
+   </documentation>
+   <davClientConfiguration
+           name="Konqueror"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>true</useFileNameAsRessourceName>
+           <needFullURLs>true</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>Konqueror</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+   <documentation>
+    Configuration for gnome-vfs
+   </documentation>
+   <davClientConfiguration
+           name="gnome-vfs"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>false</useFileNameAsRessourceName>
+           <needFullURLs>true</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>gnome-vfs</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+   <documentation>
+    Configuration for DataFreeWay
+   </documentation>
+   <davClientConfiguration
+           name="DataFreeWay"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>false</useFileNameAsRessourceName>
+           <needFullURLs>true</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>DataFreeWay</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+   <documentation>
+    Configuration for DAV Explorer
+   </documentation>
+   <davClientConfiguration
+           name="DAVExplorer"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>false</needVirtualPathForLief>
+           <useFileNameAsRessourceName>false</useFileNameAsRessourceName>
+           <needFullURLs>false</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>UCI DAV Explorer</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+   <documentation>
+    Configuration for cadaver
+   </documentation>
+   <davClientConfiguration
+           name="cadaver"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>false</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>true</needVirtualPathForLief>
+           <useFileNameAsRessourceName>false</useFileNameAsRessourceName>
+           <needFullURLs>true</needFullURLs>
+           <needMSDavHeader>false</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>cadaver</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+
+
+</extension>
+<extension target="org.nuxeo.ecm.platform.webdav.config.WebDavConfigurationService"
+      point="DavAdapter">
+
+    <davAdapter name="NoteDavAdapter" enabled="true">
+        <typeName>Note</typeName>
+        <class>org.nuxeo.ecm.platform.webdav.adapters.NoteDavResourceAdapter</class>
+    </davAdapter>
+</extension>
+
+</component>

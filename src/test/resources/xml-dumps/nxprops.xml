@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<D:propfind xmlns:D="DAV:">
+  <D:prop xmlns:dc="http://www.nuxeo.org/dublincore/">
+    <dc:title/>
+    <dc:description/>
+    <dc:created/>
+    <dc:modified/>
+    <dc:source/>
+    <dc:contributors/>
+  </D:prop>
+</D:propfind>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.webdav.config.WebDavConfigurationService">
+  <implementation
+          class="org.nuxeo.ecm.platform.webdav.config.WebDavConfigurationService" />
+  <documentation>
+    @author Thierry Delprat (td@nuxeo.com)
+    Configuration service for Nuxeo WebDav Servlet.
+    The configuration service is used for :
+      - setup client configuration
+      - register Dav Adapters
+  </documentation>
+
+  <extension-point name="DavClientConfiguration">
+  <documentation>
+    @author Thierry Delprat (td@nuxeo.com)
+    This extension point let you contribute configuration parameters for WebDav client.
+    <code>
+    <davClientConfiguration
+           name="name of the configuration"
+           enbaled="true">
+           <needGetParameterForCollectionNamming>true/false : define if hack is used to force client using title for collections</needGetParameterForCollectionNamming>
+           <needVirtualPathForLief>true/false : define if hack is used to have a path that contains resource title</needVirtualPathForLief>
+           <useFileNameAsRessourceName>true/false : define if title is used insteed of name</useFileNameAsRessourceName>
+           <needFullURLs>true/false : define if href contains full URLs or relative URLs</needFullURLs>
+           <needMSDavHeader>true/false : define if client need the specific MS Dav Header</needMSDavHeader>
+           <userAgentPatterns>
+               <pattern>Text pattern to define if this configuration should be applied to the User Agent</pattern>
+           </userAgentPatterns>
+   </davClientConfiguration>
+   </code>
+  </documentation>
+
+    <object
+      class="org.nuxeo.ecm.platform.webdav.config.WebDavClientConfigurationDescriptor" />
+  </extension-point>
+
+  <extension-point name="DavAdapter">
+  <documentation>
+    @author Thierry Delprat (td@nuxeo.com)
+    This extension point let you contribute DAV Resource Adapters.
+    <code>
+    <davAdapter name="MyAdapter" enabled="true/false">
+        <typeName>TypeName you want to adapt</typeName>
+        <class>Implementation Class, must implement DavResourceAdapter interface </class>
+    </davAdapter>
+   </code>
+  </documentation>
+
+    <object
+      class="org.nuxeo.ecm.platform.webdav.config.DavAdapterDescriptor" />
+  </extension-point>
+
+</component>

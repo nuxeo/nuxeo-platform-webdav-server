@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "Remember to first create a workspace called 'test' in your Nuxeo instance"
+
+URL=http://192.168.2.203:8080/nuxeo/dav/default/default-domain/workspaces/test
+LOGIN=Administrator
+PASSWD=Administrator
+
+litmus -k $URL $LOGIN $PASSWD
