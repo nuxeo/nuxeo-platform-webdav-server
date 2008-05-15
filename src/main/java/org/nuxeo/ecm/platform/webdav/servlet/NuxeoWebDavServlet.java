@@ -517,8 +517,9 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             	DocumentModel sourceContainer = session.getDocument(source.getParentRef());
             	if (sourceContainer.getRef().equals(targetContainerRef)) {
                     // simple rename
-                	DavResourceAdapter adapter = source.getAdapter(DavResourceAdapter.class);
-                	adapter.rename(targetDocumentName);
+                    DavResourceAdapter adapter = source.getAdapter(DavResourceAdapter.class);
+                    adapter.rename(targetDocumentName);
+                    URLResolverCache.removeFromCache(source);
                 	
                     session.saveDocument(source);
                     session.save();
