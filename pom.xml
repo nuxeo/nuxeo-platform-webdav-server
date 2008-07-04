@@ -82,6 +82,10 @@
       <artifactId>servlets-common</artifactId>
       <version>5.0.28</version>
     </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
