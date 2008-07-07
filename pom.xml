@@ -89,7 +89,6 @@
     <dependency>
       <groupId>jsr170</groupId>
       <artifactId>jcr</artifactId>
-      <version>1.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
