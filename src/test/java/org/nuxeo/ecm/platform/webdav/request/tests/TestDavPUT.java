@@ -36,11 +36,16 @@ public class TestDavPUT extends AbstractWebDavRequestTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        deploy("nxfilemanager-service.xml");
-        deploy("nxfilemanager-plugins-contrib.xml");
-        deploy("nxmimetype-service.xml");
-        deploy("nxtypes-framework.xml");
-        deploy("ecm-types-contrib.xml");
+
+        deployBundle("org.nuxeo.ecm.platform.mimetype.api");
+        deployBundle("org.nuxeo.ecm.platform.mimetype.core");
+
+        deployBundle("org.nuxeo.ecm.platform.filemanager.api");
+        deployBundle("org.nuxeo.ecm.platform.filemanager.core");
+
+        //deploy("nxmimetype-service.xml");
+        //deploy("nxtypes-framework.xml");
+        //deploy("ecm-types-contrib.xml");
         URLResolverCache.resetCache();
     }
 

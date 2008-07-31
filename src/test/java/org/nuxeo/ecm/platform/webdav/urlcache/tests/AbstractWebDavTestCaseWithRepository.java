@@ -41,16 +41,17 @@ public abstract class AbstractWebDavTestCaseWithRepository extends
 
     protected DocumentModel note;
 
-    protected AbstractWebDavTestCaseWithRepository(String name) {
+    public AbstractWebDavTestCaseWithRepository(String name)
+    {
         super(name);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        deploy("dav-config-framework.xml");
-        deploy("dav-config-contrib.xml");
-        deploy("DavAdapters.xml");
+        deployContrib("org.nuxeo.ecm.platform.webdav", "OSGI-INF/dav-config-framework.xml");
+        deployContrib("org.nuxeo.ecm.platform.webdav","OSGI-INF/dav-config-contrib.xml");
+        deployContrib("org.nuxeo.ecm.platform.webdav","OSGI-INF/DavAdapters.xml");
 
         initialRepoSetup();
         URLResolverCache.resetCache();
