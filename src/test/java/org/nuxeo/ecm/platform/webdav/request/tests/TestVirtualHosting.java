@@ -62,7 +62,6 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         for (Element response : responses) {
             Element href = (Element) (response.elements("href").get(0));
             assertNotNull(href);
-            System.out.println(href.getText());
             assertTrue(href.getText().startsWith("http://MyApacheServer"));
         }
     }
@@ -93,7 +92,6 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         for (Element response : responses) {
             Element href = (Element) response.elements("href").get(0);
             assertNotNull(href);
-            System.out.println(href.getText());
             assertTrue(href.getText().startsWith(
                     "https://MyApacheServer/nuxeo/dav/"));
         }
@@ -125,7 +123,6 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         for (Element response : responses) {
             Element href = (Element) response.elements("href").get(0);
             assertNotNull(href);
-            System.out.println(href.getText());
             assertTrue(href.getText().startsWith(
                     "https://MyApacheServer/nuxeo/dav/"));
         }
