@@ -59,8 +59,6 @@ public class DavRequestXMLHelper {
                 Iterator<Element> citer = child.elementIterator();
                 while (citer.hasNext()) {
                     Element subChild = citer.next();
-                    String subTagName = subChild.getName();
-                    String subUri = subChild.getNamespace().getURI();
                     if (uri.equals(WebDavConst.DAV_XML_URI) && tagName.equals("owner")) {
                         if (subChild.nodeCount() > 0) {
                             lockInfo.setOwner(subChild.getText());
