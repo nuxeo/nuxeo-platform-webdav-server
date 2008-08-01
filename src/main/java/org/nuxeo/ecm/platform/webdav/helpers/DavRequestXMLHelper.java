@@ -40,6 +40,7 @@ public class DavRequestXMLHelper {
     private DavRequestXMLHelper() {
     }
 
+    @SuppressWarnings("unchecked")
     public static DavLockInfo extractLockInfo(Element root) {
 
         DavLockInfo lockInfo = new DavLockInfo();
@@ -75,6 +76,7 @@ public class DavRequestXMLHelper {
         return lockInfo;
     }
 
+    @SuppressWarnings("unchecked")
     public static Map<String, List<String>> extractProperties(Element root) {
         Map<String, List<String>> result = new HashMap<String, List<String>>();
 
@@ -104,6 +106,7 @@ public class DavRequestXMLHelper {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private static void extractProperty(Element prop,
             Map<String, List<String>> result) {
         Iterator<Element> eiter = prop.elementIterator();

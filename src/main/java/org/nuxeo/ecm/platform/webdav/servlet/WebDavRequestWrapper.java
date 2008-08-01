@@ -245,29 +245,29 @@ public class WebDavRequestWrapper extends HttpServletRequestWrapper {
         }
     }
 
-
     public String getHeaderDestination(boolean preprocess) {
-        if (!preprocess)
+        if (!preprocess) {
             return headerDestination;
-        else
-        {
+        } else {
             // handle preprocesing of this header
             String processedDestination = headerDestination;
 
-            if (processedDestination.contains("?"+ NuxeoWebDavServlet.GET_PARAMETER_DECORATOR))
-            {
-                String[] destParts = processedDestination.split("\\?" + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR + "=");
-                String destURIPart=destParts[0];
+            if (processedDestination.contains("?"
+                    + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR)) {
+                String[] destParts = processedDestination.split("\\?"
+                        + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR + "=");
+                String destURIPart = destParts[0];
                 Path destPath = new Path(destURIPart);
                 destPath = destPath.removeLastSegments(1);
-                String destVPart=destParts[1];
-                String[] destVSubParts=destVPart.split("/");
-                processedDestination=destPath.toString() + "/" + destVSubParts[destVSubParts.length-1];
+                String destVPart = destParts[1];
+                String[] destVSubParts = destVPart.split("/");
+                processedDestination = destPath.toString() + "/"
+                        + destVSubParts[destVSubParts.length - 1];
             }
 
             // add URL escaping with default encoding (system encoding)
             processedDestination = URLDecoder.decode(processedDestination);
-            
+
             return processedDestination;
         }
     }

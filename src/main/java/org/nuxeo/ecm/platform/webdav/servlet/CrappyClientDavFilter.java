@@ -22,16 +22,16 @@ public class CrappyClientDavFilter implements Filter {
         HttpServletRequest httpRequest=(HttpServletRequest)request;
 
         String method = httpRequest.getMethod();
-        if (method.equals(WebDavConst.METHOD_PROPFIND) || method.equals(WebDavConst.METHOD_OPTIONS)) {
+        if (method.equals(WebDavConst.METHOD_PROPFIND)
+                || method.equals(WebDavConst.METHOD_OPTIONS)) {
             httpRequest.getRequestDispatcher("/nuxeo/dav/").forward(request, response);
-        }
-        else
+        } else {
             chain.doFilter(request, response);
+        }
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
         // TODO Auto-generated method stub
-
     }
 
 }

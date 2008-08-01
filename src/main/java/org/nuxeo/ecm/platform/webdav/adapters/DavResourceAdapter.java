@@ -44,7 +44,7 @@ public interface DavResourceAdapter {
     String getFileName();
 
     void setDocumentModel(DocumentModel doc);
-    
+
     void rename(String title);
 
 }

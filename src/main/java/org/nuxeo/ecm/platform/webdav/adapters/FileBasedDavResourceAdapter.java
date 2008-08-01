@@ -107,8 +107,8 @@ public class FileBasedDavResourceAdapter extends AbstractDavResourceAdapter {
 
     @Override
     public void rename(String title) {
-    	doc.setProperty("file", "filename", title);
-    	super.rename( getFileNameWithoutExtension(title) );
+        doc.setProperty("file", "filename", title);
+        super.rename( getFileNameWithoutExtension(title) );
     }
 
     private String getFileNameWithoutExtension(String fileName) {

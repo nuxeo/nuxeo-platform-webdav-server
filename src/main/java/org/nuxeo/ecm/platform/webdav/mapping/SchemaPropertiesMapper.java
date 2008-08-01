@@ -52,6 +52,7 @@ public class SchemaPropertiesMapper implements PropertiesMapper {
         this.schema = schema;
     }
 
+    @SuppressWarnings("unchecked")
     public Map<String, String> getDavProperties(DocumentModel doc,
             List<String> fieldNames) {
 
@@ -79,14 +80,14 @@ public class SchemaPropertiesMapper implements PropertiesMapper {
                     } else if (value instanceof String[]) {
                         strValue = Arrays.toString((String[]) value);
                     } else if (value instanceof List) {
-                        List lstValues = (List) value;
+                        List<?> lstValues = (List) value;
 
                         strValue = "[";
                         for (Object val : lstValues) {
                             if (val instanceof String) {
-                                strValue = strValue + val + ',';
+                                strValue += (String) val + ',';
                             } else {
-                                strValue = strValue + val.toString() + ',';
+                                strValue += val.toString() + ',';
                             }
                         }
                         if (strValue.endsWith(",")) {
@@ -120,7 +121,7 @@ public class SchemaPropertiesMapper implements PropertiesMapper {
         DocumentPart part = doc.getPart(schema);
         for (org.nuxeo.ecm.core.api.model.Property prop : part.getChildren())
         {
-        	names.add(prop.getName());
+            names.add(prop.getName());
         }
         return names;
         /*DataModel dataModel = doc.getDataModel(schema);

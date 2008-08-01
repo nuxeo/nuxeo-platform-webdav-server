@@ -48,6 +48,7 @@ public class NuxeoComplexTypeExtractor {
         this.doc = doc;
     }
 
+    @SuppressWarnings("unchecked")
     public Element extractProperty(String schemaName, String propertyName) {
 
         ExportedDocument xmlDoc = null;
@@ -59,8 +60,8 @@ public class NuxeoComplexTypeExtractor {
 
         Element targetSchema = null;
 
-        for (Element schema : (List<Element>) xmlDoc.getDocument().getRootElement().elements(
-                "schema")) {
+        List<Element> schemas = xmlDoc.getDocument().getRootElement().elements("schema");
+        for (Element schema : schemas) {
             if (schemaName.equals(schema.attribute("name").getValue())) {
                 targetSchema = schema;
                 break;
