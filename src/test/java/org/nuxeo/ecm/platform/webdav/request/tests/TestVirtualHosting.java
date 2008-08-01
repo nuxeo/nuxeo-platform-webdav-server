@@ -36,6 +36,7 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         super(name);
     }
 
+    @SuppressWarnings("unchecked")
     public void testXForwardedHost() throws IOException, ServletException,
             DocumentException {
         URLResolverCache.resetCache();
@@ -66,6 +67,7 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testNuxeoVH() throws IOException, ServletException,
             DocumentException {
         URLResolverCache.resetCache();
@@ -97,6 +99,7 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testNuxeoVH2() throws IOException, ServletException,
             DocumentException {
         URLResolverCache.resetCache();

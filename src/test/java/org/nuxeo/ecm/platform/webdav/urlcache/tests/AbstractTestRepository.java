@@ -19,23 +19,11 @@
 
 package org.nuxeo.ecm.platform.webdav.urlcache.tests;
 
-import java.io.Serializable;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import junit.framework.TestCase;
-
 import org.nuxeo.ecm.core.api.ClientException;
-import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.DocumentRef;
-import org.nuxeo.ecm.core.api.security.SecurityConstants;
 import org.nuxeo.ecm.core.repository.jcr.testing.RepositoryOSGITestCase;
 import org.nuxeo.runtime.RuntimeService;
-import org.nuxeo.runtime.api.Framework;
-import org.nuxeo.runtime.test.TestRuntime;
 
 public abstract class AbstractTestRepository extends RepositoryOSGITestCase {
 
@@ -43,9 +31,7 @@ public abstract class AbstractTestRepository extends RepositoryOSGITestCase {
 
     protected RuntimeService runtime;
 
-
-    public AbstractTestRepository(String name)
-    {
+    public AbstractTestRepository(String name) {
         super(name);
     }
 
@@ -53,20 +39,17 @@ public abstract class AbstractTestRepository extends RepositoryOSGITestCase {
         return coreSession.getRootDocument();
     }
 
-
     @Override
     protected void setUp() throws Exception {
-         super.setUp();
+        super.setUp();
 
-        //deploy("EventService.xml");
-        //deploy("test-CoreExtensions.xml");
-        //deploy("CoreTestExtensions.xml");
+        // deploy("EventService.xml");
+        // deploy("test-CoreExtensions.xml");
+        // deploy("CoreTestExtensions.xml");
 
         openRepository();
         // compat with old test case
         remote = coreSession;
     }
-
-
 
 }

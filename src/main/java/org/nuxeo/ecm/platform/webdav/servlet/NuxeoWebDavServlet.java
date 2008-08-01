@@ -409,7 +409,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
         try {
             DocumentModel source = CoreHelper.resolveTarget(davRequest);
             CoreSession session = CoreHelper.getAssociatedCoreSession(davRequest);
-            
+
             String destination = davRequest.getHeaderDestination();
             if (destination == null) {
                 davResponse.setStatus(WebDavConst.SC_BAD_REQUEST);
@@ -488,7 +488,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                     davResponse.setStatus(WebDavConst.SC_CONFLICT);
                     return;
                 }
-                
+
                 // XXX handle crappy clients
                 if (targetDocumentName.contains("?"
                         + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR)) {
@@ -514,17 +514,17 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                         targetDocumentName);
                 session.save();
             } else {
-            	DocumentModel sourceContainer = session.getDocument(source.getParentRef());
-            	if (sourceContainer.getRef().equals(targetContainerRef)) {
+                DocumentModel sourceContainer = session.getDocument(source.getParentRef());
+                if (sourceContainer.getRef().equals(targetContainerRef)) {
                     // simple rename
                     DavResourceAdapter adapter = source.getAdapter(DavResourceAdapter.class);
                     adapter.rename(targetDocumentName);
                     URLResolverCache.removeFromCache(source);
-                	
+
                     session.saveDocument(source);
                     session.save();
                     targetAlreadyExists = true;
-            	} else {
+                } else {
                     // real move
                     session.move(source.getRef(), targetContainerRef,
                             targetDocumentName);
@@ -810,12 +810,12 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
         String virtualHostedBaseURL;
         if (nuxeoVH != null) {
-            if (nuxeoVH.endsWith("/"))
-                virtualHostedBaseURL = nuxeoVH.substring(0,
-                        nuxeoVH.length() - 1)
+            if (nuxeoVH.endsWith("/")) {
+                virtualHostedBaseURL = nuxeoVH.substring(0, nuxeoVH.length() - 1)
                         + PATTERN;
-            else
+            } else {
                 virtualHostedBaseURL = nuxeoVH + PATTERN;
+            }
         } else {
             virtualHostedBaseURL = request.getScheme() + "://" + forwardedHost
                     + PATTERN;

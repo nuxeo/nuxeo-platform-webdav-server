@@ -140,10 +140,10 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     public void rename(String title) {
-    	// Minimal implementation
-    	doc.setProperty("dublincore", "title", title);
+        // Minimal implementation
+        doc.setProperty("dublincore", "title", title);
     }
 
 }
