@@ -24,7 +24,6 @@ import java.io.InputStream;
 
 import javax.servlet.ServletException;
 
-import org.dom4j.DocumentException;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.locking.adapters.LockableDocument;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavConst;
@@ -44,7 +43,7 @@ public class TestDavLock extends AbstractWebDavRequestTestCase {
     }
 
     public void testLock() throws ServletException, IOException,
-            ClientException, DocumentException {
+            ClientException {
         InputStream in = getResource("xml-dumps/lockRequest.xml").openStream();
         FakeRequest fReq = new FakeRequest("LOCK",
                 "/demo/Folder1/Folder2/Folder3/testBlob.txt", in);
@@ -64,7 +63,7 @@ public class TestDavLock extends AbstractWebDavRequestTestCase {
     }
 
     public void testLocked() throws ServletException, IOException,
-            ClientException, DocumentException {
+            ClientException {
 
         LockableDocument lockableDoc = file.getAdapter(LockableDocument.class);
         lockableDoc.lock("Bitou");
@@ -80,7 +79,7 @@ public class TestDavLock extends AbstractWebDavRequestTestCase {
     }
 
     public void testLockedByMe() throws ServletException, IOException,
-            ClientException, DocumentException {
+            ClientException {
 
         LockableDocument lockableDoc = file.getAdapter(LockableDocument.class);
         lockableDoc.lock("Administrator");
@@ -96,7 +95,7 @@ public class TestDavLock extends AbstractWebDavRequestTestCase {
     }
 
     public void testUnlock() throws ServletException, IOException,
-            ClientException, DocumentException {
+            ClientException {
 
         LockableDocument lockableDoc = file.getAdapter(LockableDocument.class);
         lockableDoc.lock("Administrator");

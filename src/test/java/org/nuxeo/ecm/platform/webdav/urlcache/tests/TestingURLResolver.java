@@ -22,7 +22,6 @@ package org.nuxeo.ecm.platform.webdav.urlcache.tests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.platform.webdav.adapters.DavResourceAdapter;
@@ -35,7 +34,7 @@ public class TestingURLResolver extends AbstractWebDavTestCaseWithRepository {
         super(name);
     }
 
-    public void testFoldersResolution() throws ClientException {
+    public void testFoldersResolution() {
         URLResolverCache.resetCache();
 
         assertEquals("/folder-1/folder-2/folder-3", folder3.getPathAsString());

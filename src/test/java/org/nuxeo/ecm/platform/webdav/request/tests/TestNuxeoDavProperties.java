@@ -32,7 +32,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.QName;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.mapping.NuxeoComplexTypeExtractor;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavConst;
 import org.nuxeo.ecm.platform.webdav.urlcache.URLResolverCache;
@@ -99,7 +98,7 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
     }
 
     public void testSimpleNuxeoProperties() throws IOException,
-            ServletException, DocumentException, ClientException {
+            ServletException, DocumentException {
         System.out.println(WebDavConst.HTTP_HEADER_DATE_FORMAT.format(modified.getTime()));
 
         InputStream in = getResource("xml-dumps/nxprops.xml").openStream();
@@ -134,7 +133,7 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
     }
 
     public void testComplexNuxeoProperties() throws IOException,
-            ServletException, DocumentException, ClientException {
+            ServletException, DocumentException {
         InputStream in = getResource("xml-dumps/nxprops.xml").openStream();
         assertNotNull(in);
 

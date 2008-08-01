@@ -91,7 +91,7 @@ public class NoBodyResponse implements HttpServletResponse {
         return writer;
     }
 
-    public void setBufferSize(int size) throws IllegalStateException {
+    public void setBufferSize(int size) {
         resp.setBufferSize(size);
     }
 
@@ -99,11 +99,11 @@ public class NoBodyResponse implements HttpServletResponse {
         return resp.getBufferSize();
     }
 
-    public void reset() throws IllegalStateException {
+    public void reset() {
         resp.reset();
     }
 
-    public void resetBuffer() throws IllegalStateException {
+    public void resetBuffer() {
         resp.resetBuffer();
     }
 

@@ -79,8 +79,7 @@ public class TestMKCol extends AbstractWebDavRequestTestCase {
         assertEquals("New Folder", folder4.getTitle());
     }
 
-    public void testMKColConflict() throws IOException, ServletException,
-            ClientException {
+    public void testMKColConflict() throws IOException, ServletException {
         URLResolverCache.resetCache();
 
         FakeRequest fReq = new FakeRequest("MKCOL",
