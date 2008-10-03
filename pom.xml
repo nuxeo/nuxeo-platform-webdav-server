@@ -4,14 +4,14 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-parent</artifactId>
-    <version>5.1.6-SNAPSHOT</version>
+    <version>5.1.6</version>
   </parent>
 
   <groupId>org.nuxeo.ecm.platform</groupId>
   <artifactId>nuxeo-platform-webdav-server</artifactId>
   <name>Nuxeo Platform WebDav Server</name>
   <description>Nuxeo Enterprise Platform: WebDav Server.</description>
-  <version>5.1.6-SNAPSHOT</version>
+  <version>5.1.6</version>
 
   <dependencies>
     <dependency>
