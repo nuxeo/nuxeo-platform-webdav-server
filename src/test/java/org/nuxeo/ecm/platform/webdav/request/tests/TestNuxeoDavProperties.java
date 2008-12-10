@@ -32,6 +32,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.QName;
+import org.dom4j.Node;
 import org.nuxeo.ecm.platform.webdav.mapping.NuxeoComplexTypeExtractor;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavConst;
 import org.nuxeo.ecm.platform.webdav.urlcache.URLResolverCache;
@@ -99,7 +100,7 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
 
     public void testSimpleNuxeoProperties() throws IOException,
             ServletException, DocumentException {
-        System.out.println(WebDavConst.HTTP_HEADER_DATE_FORMAT.format(modified.getTime()));
+        //System.out.println(WebDavConst.HTTP_HEADER_DATE_FORMAT.format(modified.getTime()));
 
         InputStream in = getResource("xml-dumps/nxprops.xml").openStream();
         assertNotNull(in);
@@ -116,7 +117,7 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
         assertEquals(1, s);
 
         String xmlStr = xml.asXML();
-        System.out.print("XML to check: " + xmlStr);
+        //System.out.print("XML to check: " + xmlStr);
         assertTrue(xmlStr.contains("dc:created"));
 
         Element response = (Element) xml.elements("response").get(0);
@@ -127,9 +128,9 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
         assertEquals(1, prop.elements(modifiedTag).size());
 
         assertEquals(DESCRIPTION,
-                ((Element) prop.elements(descriptionTag).get(0)).getText());
+                ((Node) prop.elements(descriptionTag).get(0)).getText());
         assertEquals(SOURCE,
-                ((Element) prop.elements(sourceTag).get(0)).getText());
+                ((Node) prop.elements(sourceTag).get(0)).getText());
     }
 
     public void testComplexNuxeoProperties() throws IOException,
@@ -149,13 +150,13 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
         assertEquals(1, s);
 
         String xmlStr = xml.asXML();
-        System.out.print("XML to check: " + xmlStr);
+        //System.out.print("XML to check: " + xmlStr);
 
         Element response = (Element) xml.elements("response").get(0);
         Element propstat = (Element) response.elements("propstat").get(0);
         Element prop = (Element) propstat.elements("prop").get(0);
 
-        assertEquals(((Element) prop.elements(contributorsTag).get(0)).getText(),
+        assertEquals(((Node) prop.elements(contributorsTag).get(0)).getText(),
                 contributors.toString());
     }
 

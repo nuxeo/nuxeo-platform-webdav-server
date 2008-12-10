@@ -60,7 +60,7 @@ public class TestVirtualHosting extends AbstractWebDavRequestTestCase {
         List<Element> responses = xml.elements("response");
 
         for (Element response : responses) {
-            Element href = (Element) (response.elements("href").get(0));
+            Element href = (Element) response.elements("href").get(0);
             assertNotNull(href);
             assertTrue(href.getText().startsWith("http://MyApacheServer"));
         }

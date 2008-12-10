@@ -192,7 +192,7 @@ public class URLCacheBackend {
 
         oldestEntry = maxTs;
 
-        if (forceRecusiveGC && (data.keySet().size() > maxSize)) {
+        if (forceRecusiveGC && data.keySet().size() > maxSize) {
             gcIfNeeded();
         }
     }

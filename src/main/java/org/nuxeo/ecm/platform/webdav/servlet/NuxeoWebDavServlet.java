@@ -228,11 +228,11 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             }
 
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -258,11 +258,11 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             }
 
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -294,11 +294,11 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
         try {
             parent = CoreHelper.resolveTarget(davRequest, containerPath);
         } catch (ClientException e) {
-            log.error("Error while getting parent document : " + e.getMessage());
+            log.error("Error while getting parent document : " + e.getMessage(), e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         } catch (Exception e) {
-            log.error("Error while getting parent document : " + e.getMessage());
+            log.error("Error while getting parent document : " + e.getMessage(), e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -320,7 +320,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
         try {
             session = CoreHelper.getAssociatedCoreSession(davRequest);
         } catch (Exception e) {
-            log.error("Error while getting session : " + e.getMessage());
+            log.error("Error while getting session : " + e.getMessage(), e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -333,7 +333,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 return;
             }
         } catch (ClientException e) {
-            log.error("Error while calling hasChildren : " + e.getMessage());
+            log.error("Error while calling hasChildren : " + e.getMessage(), e);
         }
 
         // determine type of the collection
@@ -390,7 +390,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
             session.save();
         } catch (ClientException e) {
-            log.error("Error while getting session : " + e.getMessage());
+            log.error("Error while getting session : " + e.getMessage(), e);
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -492,10 +492,9 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 }
 
                 // XXX handle crappy clients
-                if (targetDocumentName.contains("?"
-                        + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR)) {
-                    targetDocumentName = targetDocumentName.split("\\?"
-                            + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR + "=")[1];
+                if (targetDocumentName.contains("?" + GET_PARAMETER_DECORATOR)) {
+                    targetDocumentName = targetDocumentName.split(
+                            "\\?" + GET_PARAMETER_DECORATOR + "=")[1];
                     if (targetDocumentName.contains("/")) {
                         String[] subCrap = targetDocumentName.split("/");
                         targetDocumentName = subCrap[subCrap.length - 1];
@@ -543,10 +542,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
         } catch (ClientException e) {
             davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         } catch (Exception e) {
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -616,12 +615,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 if (existingDoc != null) {
                     alreadyExist = true;
                 }
-            } catch (ClientException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+            } catch (ClientException e) {
+                log.error(e);
+            } catch (Exception e) {
+                log.error(e);
             }
 
             try {
@@ -648,7 +645,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 session.save();
             } catch (Exception e) {
                 log.error("Error when creating the document via FileManager: "
-                        + e.getMessage());
+                        + e.getMessage(), e);
                 davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
                 return;
             }
@@ -666,7 +663,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                     writer.write("has been created.</BODY></HTML>");
                     writer.flush();
                 } catch (IOException e) {
-                    log.error("Unable to write HTML output : " + e.getMessage());
+                    log.error("Unable to write HTML output: " + e.getMessage(), e);
                 }
             }
         } finally {
@@ -729,11 +726,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
         } catch (ClientException e) {
             davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
-            log.error(e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } catch (Exception e) {
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -749,10 +745,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             URLResolverCache.removeFromCache(target);
         } catch (ClientException e) {
             davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         } catch (Exception e) {
             davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
 
         davResponse.setStatus(WebDavConst.SC_NO_CONTENT);

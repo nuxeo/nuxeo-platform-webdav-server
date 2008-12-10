@@ -207,9 +207,7 @@ public class WebDavRequestWrapper extends HttpServletRequestWrapper {
                 davParameters = getDocumentRoot(bodyStream);
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            log.error("Error while parsing request Body : " + e.getMessage());
+            log.error("Error while parsing request Body: " + e.getMessage(), e);
         }
     }
 
@@ -248,28 +246,27 @@ public class WebDavRequestWrapper extends HttpServletRequestWrapper {
     public String getHeaderDestination(boolean preprocess) {
         if (!preprocess) {
             return headerDestination;
-        } else {
-            // handle preprocesing of this header
-            String processedDestination = headerDestination;
-
-            if (processedDestination.contains("?"
-                    + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR)) {
-                String[] destParts = processedDestination.split("\\?"
-                        + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR + "=");
-                String destURIPart = destParts[0];
-                Path destPath = new Path(destURIPart);
-                destPath = destPath.removeLastSegments(1);
-                String destVPart = destParts[1];
-                String[] destVSubParts = destVPart.split("/");
-                processedDestination = destPath.toString() + "/"
-                        + destVSubParts[destVSubParts.length - 1];
-            }
-
-            // add URL escaping with default encoding (system encoding)
-            processedDestination = URLDecoder.decode(processedDestination);
-
-            return processedDestination;
         }
+        // handle preprocesing of this header
+        String processedDestination = headerDestination;
+
+        if (processedDestination.contains("?"
+                + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR)) {
+            String[] destParts = processedDestination.split("\\?"
+                    + NuxeoWebDavServlet.GET_PARAMETER_DECORATOR + "=");
+            String destURIPart = destParts[0];
+            Path destPath = new Path(destURIPart);
+            destPath = destPath.removeLastSegments(1);
+            String destVPart = destParts[1];
+            String[] destVSubParts = destVPart.split("/");
+            processedDestination = destPath.toString() + "/"
+                    + destVSubParts[destVSubParts.length - 1];
+        }
+
+        // add URL escaping with default encoding (system encoding)
+        processedDestination = URLDecoder.decode(processedDestination);
+
+        return processedDestination;
     }
 
     public String getHeaderDestination() {

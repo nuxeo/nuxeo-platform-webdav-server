@@ -34,7 +34,7 @@ import org.nuxeo.ecm.platform.webdav.helpers.DavResponseXMLHelper;
 /**
  * Response wrapper for WebDAV requests.
  * <p>
- * Encapsulates WebDAV specific methods.
+ * Encapsulates WebDAV-specific methods.
  *
  * @author tiry
  */
@@ -57,8 +57,7 @@ public class WebDavResponseWrapper extends HttpServletResponseWrapper {
     }
 
     public void setUnimplemented() {
-        response.setStatus(SC_NOT_IMPLEMENTED,
-                "Not implemented by WebDavServlet");
+        response.setStatus(SC_NOT_IMPLEMENTED);
     }
 
     /**
@@ -109,9 +108,8 @@ public class WebDavResponseWrapper extends HttpServletResponseWrapper {
             String xmlResult = xmlHelper.getAsXMLString();
             getWriter().write(xmlResult);
             log.debug("NuxeoDavResponse XML Body= \n" + xmlResult);
-
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

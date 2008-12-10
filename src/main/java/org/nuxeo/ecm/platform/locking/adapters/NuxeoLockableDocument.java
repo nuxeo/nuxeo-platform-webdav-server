@@ -64,7 +64,7 @@ public class NuxeoLockableDocument implements LockableDocument {
     public boolean isLockExpired() throws ClientException {
         LockInfo lockInfo = getLockInfo();
 
-        float lockAgeInHour = ((new Date()).getTime() - lockInfo.getLockDate().getTime())
+        float lockAgeInHour = (new Date().getTime() - lockInfo.getLockDate().getTime())
                 / (3600 * 1000);
 
         return lockAgeInHour > LOCK_TIMEOUT_IN_HOURS;
