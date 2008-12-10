@@ -95,8 +95,14 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
         davResponse.setContentType("text/xml");
 
         // recursive calls to extract the properties from the target doc
-        writeProperties(davResponse, requestedProperties, doc, depth, 0,
-                davRequest);
+        try {
+            writeProperties(davResponse, requestedProperties, doc, depth, 0,
+                    davRequest);
+        } catch (ClientException e) {
+            log.error("Error while writing properties to document : " + e.getMessage());
+            davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
         davResponse.writeProperties();
         davResponse.setLocale(Locale.US);
         davResponse.setStatus(WebDavConst.SC_MULTI_STATUS, "Multi-Status");
@@ -105,7 +111,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
     protected static void writeProperties(WebDavResponseWrapper davResponse,
             Map<String, List<String>> requestedProperties, DocumentModel doc,
-            String maxDepth, int depth, WebDavRequestWrapper davRequest) {
+            String maxDepth, int depth, WebDavRequestWrapper davRequest) throws ClientException {
         if (!maxDepth.equals(WebDavConst.DAV_DEPTH_INFINITY)) {
             if (maxDepth.equals("0")) {
                 if (depth > 0) {
@@ -267,11 +273,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             WebDavResponseWrapper davResponse) {
         log.debug("doMkcol");
 
-        String path=null;
-        String colName = null;
-        String containerPath = null;
-
-        path = CoreHelper.getDocumentPath(davRequest);
+        String path = CoreHelper.getDocumentPath(davRequest);
         String[] pathParts = path.split("/");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < pathParts.length - 1; i++) {
@@ -280,8 +282,8 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 sb.append('/').append(part);
             }
         }
-        colName = pathParts[pathParts.length - 1];
-        containerPath = sb.append('/').toString();
+        String colName = pathParts[pathParts.length - 1];
+        String containerPath = sb.append('/').toString();
 
         log.debug("Creating Collection " + colName + " at path "
                 + containerPath);
@@ -598,9 +600,9 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             try {
                 tmpfile = File.createTempFile("NuxeoWebDavServlet", "tmp");
                 FileUtils.copyToFile(input, tmpfile);
-            } catch (IOException e2) {
+            } catch (IOException e) {
                 log.error("Error while copying blob to tmp file :"
-                        + e2.getMessage());
+                        + e.getMessage());
             }
 
             Blob thefile = StreamingBlob.createFromFile(tmpfile);
@@ -777,7 +779,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
     }
 
     private static String getRessourceURL(DocumentModel doc,
-            WebDavRequestWrapper request, int depth) {
+            WebDavRequestWrapper request, int depth) throws ClientException {
         if (depth > 0) {
             return virtualHostURL(request, getResourceURL(doc, request));
         } else {
@@ -827,7 +829,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
     }
 
     private static String getResourceURL(DocumentModel doc,
-            WebDavRequestWrapper request) {
+            WebDavRequestWrapper request) throws ClientException {
 
         String subPath = doc.getPathAsString();
         String baseURL = request.getRequestURL().toString();

@@ -19,17 +19,20 @@
 
 package org.nuxeo.ecm.platform.webdav.adapters;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.PagedDocumentsProvider;
+import org.nuxeo.ecm.core.search.api.client.query.QueryException;
 import org.nuxeo.ecm.core.search.api.client.querymodel.QueryModel;
 import org.nuxeo.ecm.core.search.api.client.querymodel.QueryModelService;
 import org.nuxeo.ecm.core.search.api.client.querymodel.descriptor.QueryModelDescriptor;
@@ -59,7 +62,7 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         this.doc = doc;
     }
 
-    protected String getMofificationDate() {
+    protected String getMofificationDate() throws ClientException {
         if (lastModified == null) {
             Calendar modified = (Calendar) doc.getProperty("dublincore",
                     "modified");
@@ -84,7 +87,7 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         return session;
     }
 
-    protected PagedDocumentsProvider execQueryModel() throws Exception {
+    protected PagedDocumentsProvider execQueryModel() throws ClientException, QueryException {
         QueryModelService qmService = (QueryModelService) Framework.getRuntime().getComponent(
                 QueryModelService.NAME);
         QueryModelDescriptor qmd = qmService.getQueryModelDescriptor(qmName);
@@ -122,26 +125,23 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         return title + '(' + idx + ')';
     }
 
-    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) {
-        // TODO Auto-generated method stub
+    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res)
+            throws IOException, ClientException {
     }
 
-    public long getContentLength() {
-        // TODO Auto-generated method stub
+    public long getContentLength() throws ClientException {
         return 0;
     }
 
-    public String getContentType() {
-        // TODO Auto-generated method stub
+    public String getContentType() throws ClientException {
         return null;
     }
 
-    public String getFileName() {
-        // TODO Auto-generated method stub
+    public String getFileName() throws ClientException {
         return null;
     }
 
-    public void rename(String title) {
+    public void rename(String title) throws ClientException {
         // Minimal implementation
         doc.setProperty("dublincore", "title", title);
     }

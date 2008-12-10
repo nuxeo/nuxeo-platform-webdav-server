@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.mapping.ApacheDavPropertiesMapper;
 import org.nuxeo.ecm.platform.webdav.mapping.DavPropertiesMapper;
 import org.nuxeo.ecm.platform.webdav.mapping.NullPropertiesMapper;
@@ -59,7 +60,7 @@ public class MappingHelper {
     }
 
     public static Map<String, Map<String, String>> getAllProperties(
-            DocumentModel doc) {
+            DocumentModel doc) throws ClientException {
 
         Map<String, Map<String, String>> result = new HashMap<String, Map<String, String>>();
 
@@ -79,7 +80,7 @@ public class MappingHelper {
     }
 
     public static Map<String, List<String>> getAllPropertyNames(
-            DocumentModel doc) {
+            DocumentModel doc) throws ClientException {
         Map<String, List<String>> result = new HashMap<String, List<String>>();
 
         // Dav Properties

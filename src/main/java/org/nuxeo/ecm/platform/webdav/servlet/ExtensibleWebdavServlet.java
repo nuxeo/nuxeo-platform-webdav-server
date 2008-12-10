@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.ClientException;
 
 /**
  * Base class for the Nuxeo WebDAV Servlet.
@@ -41,14 +42,13 @@ public class ExtensibleWebdavServlet extends HttpServlet {
     private static final Log log = LogFactory.getLog(ExtensibleWebdavServlet.class);
 
     /**
-     * Handles the special WebDAV methods.
+     * Handles the WebDAV methods.
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         String method = req.getMethod();
-
 
         // force session creation, because some clients are too dummy
         req.getSession(true);

@@ -25,6 +25,7 @@ import java.io.IOException;
 import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.io.DocumentPipe;
 import org.nuxeo.ecm.core.io.DocumentReader;
 import org.nuxeo.ecm.core.io.DocumentWriter;
@@ -44,7 +45,6 @@ public class DefaultNonFolderishDavDownloadAdapter
 
     private String export;
 
-
     @Override
     public String getContentType() {
         return "text/xml";
@@ -57,20 +57,16 @@ public class DefaultNonFolderishDavDownloadAdapter
     }
 
     @Override
-    public String getFileName() {
+    public String getFileName() throws ClientException {
         return doc.getTitle();
     }
 
     @Override
-    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) {
-        try {
-            createExport();
-            res.setContentLength(export.length());
-            res.getWriter().write(export);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res)
+            throws ClientException, IOException {
+        createExport();
+        res.setContentLength(export.length());
+        res.getWriter().write(export);
         res.setContentType("text/xml");
         res.setHeader("Last-Modified", getMofificationDate());
     }

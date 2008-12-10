@@ -48,43 +48,32 @@ public class DefaultFolderishDavDownloadAdapter extends
     }
 
     @Override
-    public long getContentLength() {
+    public long getContentLength() throws ClientException {
         createIndex();
         return index.length();
     }
 
     @Override
-    public String getFileName() {
+    public String getFileName() throws ClientException {
         return doc.getTitle();
     }
 
     @Override
-    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) {
+    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) throws IOException, ClientException {
         if (!req.getRequestURL().toString().endsWith("/")) {
             String goodURL = req.getRequestURL().append('/').toString();
             if (req.getQueryString() != null) {
                 goodURL += '?' + req.getQueryString();
             }
-            try {
-                res.sendRedirect(goodURL);
-                // res.flushBuffer();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            res.sendRedirect(goodURL);
         }
-        try {
-            createIndex();
-            res.getWriter().write(index);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        createIndex();
+        res.getWriter().write(index);
         res.setContentType("text/html");
         res.setHeader("Last-Modified", getMofificationDate());
     }
 
-    private void createIndex() {
+    private void createIndex() throws ClientException {
         if (index != null) {
             return;
         }

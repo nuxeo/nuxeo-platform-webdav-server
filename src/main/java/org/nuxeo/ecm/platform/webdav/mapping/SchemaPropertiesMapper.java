@@ -29,7 +29,9 @@ import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DataModel;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.model.DocumentPart;
+import org.nuxeo.ecm.core.api.model.Property;
 
 /**
  * Properties mapper for Nuxeo custom properties.
@@ -54,7 +56,7 @@ public class SchemaPropertiesMapper implements PropertiesMapper {
 
     @SuppressWarnings("unchecked")
     public Map<String, String> getDavProperties(DocumentModel doc,
-            List<String> fieldNames) {
+            List<String> fieldNames) throws ClientException {
 
         if (schema == null) {
             return null;
@@ -105,22 +107,21 @@ public class SchemaPropertiesMapper implements PropertiesMapper {
         return result;
     }
 
-    public Map<String, String> getAllDavProperties(DocumentModel doc) {
+    public Map<String, String> getAllDavProperties(DocumentModel doc) throws ClientException {
         if (schema == null) {
             return null;
         }
         return getDavProperties(doc, getDavPropertiesNames(doc));
     }
 
-    public List<String> getDavPropertiesNames(DocumentModel doc) {
+    public List<String> getDavPropertiesNames(DocumentModel doc) throws ClientException {
         if (schema == null) {
             return null;
         }
 
         List<String> names = new ArrayList<String>();
         DocumentPart part = doc.getPart(schema);
-        for (org.nuxeo.ecm.core.api.model.Property prop : part.getChildren())
-        {
+        for (Property prop : part.getChildren()) {
             names.add(prop.getName());
         }
         return names;

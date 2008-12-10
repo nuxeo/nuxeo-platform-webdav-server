@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.Blob;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavRequestWrapper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavResponseWrapper;
 
@@ -45,7 +46,7 @@ public class FileBasedDavResourceAdapter extends AbstractDavResourceAdapter {
 
     private String extension;
 
-    private void readFileAttributes() {
+    private void readFileAttributes() throws ClientException {
         if (blob == null) {
             blob = (Blob) doc.getProperty("file", "content");
             contentType = blob.getMimeType();
@@ -66,25 +67,25 @@ public class FileBasedDavResourceAdapter extends AbstractDavResourceAdapter {
     }
 
     @Override
-    public String getContentType() {
+    public String getContentType() throws ClientException {
         readFileAttributes();
         return contentType;
     }
 
     @Override
-    public long getContentLength() {
+    public long getContentLength() throws ClientException {
         readFileAttributes();
         return contentLength;
     }
 
     @Override
-    public String getFileName() {
+    public String getFileName() throws ClientException {
         readFileAttributes();
         return fileName;
     }
 
     @Override
-    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) {
+    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) throws ClientException {
         Blob blob = (Blob) doc.getProperty("file", "content");
         String fileName = (String) doc.getProperty("file", "filename");
 
@@ -106,9 +107,9 @@ public class FileBasedDavResourceAdapter extends AbstractDavResourceAdapter {
     }
 
     @Override
-    public void rename(String title) {
+    public void rename(String title) throws ClientException {
         doc.setProperty("file", "filename", title);
-        super.rename( getFileNameWithoutExtension(title) );
+        super.rename(getFileNameWithoutExtension(title));
     }
 
     private String getFileNameWithoutExtension(String fileName) {

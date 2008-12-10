@@ -84,7 +84,7 @@ public class NuxeoLockableDocument implements LockableDocument {
             lockInfo.setToken(existingLock);
         } catch (ParseException e) {
             throw new ClientException("Unable to parse lockInfo for document "
-                    + targetDoc.getPathAsString());
+                    + targetDoc.getPathAsString(), e);
         }
 
         return lockInfo;
@@ -96,7 +96,7 @@ public class NuxeoLockableDocument implements LockableDocument {
 
         boolean canLock = false;
 
-        int returnCode = LockableDocument.LOCKED_OK;
+        int returnCode = LOCKED_OK;
 
         if (lockInfo != null) {
             // document is already locked
@@ -107,14 +107,14 @@ public class NuxeoLockableDocument implements LockableDocument {
             } else {
                 if (lockingUser.equals(userName)) {
                     canLock = true;
-                    return LockableDocument.ALREADY_LOCKED_BY_YOU;
+                    return ALREADY_LOCKED_BY_YOU;
                 } else {
                     if (isLockExpired()) {
                         canLock = true;
-                        returnCode = LockableDocument.LOCK_BORROWED;
+                        returnCode = LOCK_BORROWED;
                     } else {
                         canLock = false;
-                        return LockableDocument.CAN_NOT_BORROW_LOCK;
+                        return CAN_NOT_BORROW_LOCK;
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class NuxeoLockableDocument implements LockableDocument {
 
         boolean canUnLock = false;
 
-        int returnCode = LockableDocument.NOT_LOCKED;
+        int returnCode = NOT_LOCKED;
 
         if (lockInfo != null) {
             // document is already locked
@@ -141,18 +141,18 @@ public class NuxeoLockableDocument implements LockableDocument {
 
             if (lockingUser == null) {
                 canUnLock = true;
-                returnCode = LockableDocument.NOT_LOCKED;
+                returnCode = NOT_LOCKED;
             } else {
                 if (lockingUser.equals(userName)) {
                     canUnLock = true;
-                    returnCode = LockableDocument.ALREADY_LOCKED_BY_YOU;
+                    returnCode = ALREADY_LOCKED_BY_YOU;
                 } else {
                     if (isLockExpired()) {
                         canUnLock = true;
-                        returnCode = LockableDocument.LOCK_EXPIRED;
+                        returnCode = LOCK_EXPIRED;
                     } else {
                         canUnLock = false;
-                        return LockableDocument.CAN_NOT_UNLOCK;
+                        return CAN_NOT_UNLOCK;
                     }
                 }
             }

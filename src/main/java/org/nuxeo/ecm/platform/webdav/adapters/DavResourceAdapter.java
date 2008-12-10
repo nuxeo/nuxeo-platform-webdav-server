@@ -20,8 +20,11 @@
 package org.nuxeo.ecm.platform.webdav.adapters;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavRequestWrapper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavResponseWrapper;
+
+import java.io.IOException;
 
 /**
  * Document Adapter interface to handle WebDAV GET requests.
@@ -35,16 +38,16 @@ import org.nuxeo.ecm.platform.webdav.servlet.WebDavResponseWrapper;
  */
 public interface DavResourceAdapter {
 
-    void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res);
+    void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) throws IOException, ClientException;
 
-    String getContentType();
+    String getContentType() throws ClientException;
 
-    long getContentLength();
+    long getContentLength() throws ClientException;
 
-    String getFileName();
+    String getFileName() throws ClientException;
 
     void setDocumentModel(DocumentModel doc);
 
-    void rename(String title);
+    void rename(String title) throws ClientException;
 
 }

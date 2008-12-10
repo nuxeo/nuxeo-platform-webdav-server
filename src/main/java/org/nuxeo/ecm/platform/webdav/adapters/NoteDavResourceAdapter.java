@@ -21,6 +21,7 @@ package org.nuxeo.ecm.platform.webdav.adapters;
 
 import java.io.IOException;
 
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavRequestWrapper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavResponseWrapper;
 
@@ -39,7 +40,7 @@ public class NoteDavResourceAdapter extends AbstractDavResourceAdapter {
 
     private String fileName;
 
-    private void readFileAttributes() {
+    private void readFileAttributes() throws ClientException {
         if (content == null) {
             content = (String) doc.getProperty("note", "note");
             fileName = doc.getTitle();
@@ -65,7 +66,7 @@ public class NoteDavResourceAdapter extends AbstractDavResourceAdapter {
     }
 
     @Override
-    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) {
+    public void doGet(WebDavRequestWrapper req, WebDavResponseWrapper res) throws ClientException {
           readFileAttributes();
           res.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\";");
           res.setHeader("Last-Modified", getMofificationDate());
@@ -82,19 +83,19 @@ public class NoteDavResourceAdapter extends AbstractDavResourceAdapter {
     }
 
     @Override
-    public long getContentLength() {
+    public long getContentLength() throws ClientException {
         readFileAttributes();
         return contentLength;
     }
 
     @Override
-    public String getContentType() {
+    public String getContentType() throws ClientException {
         readFileAttributes();
         return contentType;
     }
 
     @Override
-    public String getFileName() {
+    public String getFileName() throws ClientException {
         readFileAttributes();
         return fileName;
     }

@@ -105,8 +105,7 @@ public class CoreHelper {
         return path.substring(rep.length() + 1);
     }
 
-    public static CoreSession getAssociatedCoreSession(WebDavRequestWrapper req)
-            throws Exception {
+    public static CoreSession getAssociatedCoreSession(WebDavRequestWrapper req) throws Exception {
         CoreSession session = (CoreSession) req.getAttribute("CoreSession");
         if (session == null) {
             RepositoryManager rm = Framework.getService(RepositoryManager.class);
@@ -154,7 +153,7 @@ public class CoreHelper {
     }
 
     /**
-     * Resolve a virtual WebDav path using the cache and repository browsing.
+     * Resolves a virtual WebDAV path using the cache and repository browsing.
      *
      * @param req
      * @param containerPath
@@ -162,7 +161,7 @@ public class CoreHelper {
      * @return
      */
     public static DocumentModel resolveVirtualPath(WebDavRequestWrapper req,
-            String containerPath, List<String> subPath) {
+            String containerPath, List<String> subPath) throws ClientException {
         CoreSession session;
         try {
             session = getAssociatedCoreSession(req);
@@ -181,7 +180,7 @@ public class CoreHelper {
      * @return
      */
     public static DocumentModel resolveVirtualPath(CoreSession session,
-            String containerPath, List<String> subPath) {
+            String containerPath, List<String> subPath) throws ClientException {
         if (containerPath.endsWith("/")) {
             containerPath = containerPath.substring(0,
                     containerPath.length() - 1);
@@ -251,7 +250,7 @@ public class CoreHelper {
     }
 
     public static DocumentModel resolveVirtualChild(CoreSession session,
-            DocumentModel container, String vPath) {
+            DocumentModel container, String vPath) throws ClientException {
         if (!container.isFolder()) {
             return null;
         }
@@ -281,7 +280,7 @@ public class CoreHelper {
     @Deprecated
     public static DocumentModel resolveVirtualLiefPath(
             WebDavRequestWrapper req, String docPath) throws ClientException {
-        CoreSession session = null;
+        CoreSession session;
         try {
             session = getAssociatedCoreSession(req);
         } catch (Exception e) {

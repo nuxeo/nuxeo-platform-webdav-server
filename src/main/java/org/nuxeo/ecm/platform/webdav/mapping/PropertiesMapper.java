@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 
 /**
  * Interface for property mappers.
@@ -32,10 +33,10 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 public interface PropertiesMapper {
 
     Map<String, String> getDavProperties(DocumentModel doc,
-            List<String> fieldNames);
+            List<String> fieldNames) throws ClientException;
 
-    Map<String, String> getAllDavProperties(DocumentModel doc);
+    Map<String, String> getAllDavProperties(DocumentModel doc) throws ClientException;
 
-    List<String> getDavPropertiesNames(DocumentModel doc);
+    List<String> getDavPropertiesNames(DocumentModel doc) throws ClientException;
 
 }

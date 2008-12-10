@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.webdav.adapters.DavResourceAdapter;
 import org.nuxeo.ecm.platform.webdav.helpers.MappingHelper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavConst;
@@ -53,7 +54,7 @@ public class DavPropertiesMapper implements PropertiesMapper {
     }
 
     public Map<String, String> getDavProperties(DocumentModel doc,
-            List<String> fieldNames) {
+            List<String> fieldNames) throws ClientException {
         Map<String, String> davProps = new HashMap<String, String>();
 
         // auto add some compulsory properties
@@ -81,6 +82,7 @@ public class DavPropertiesMapper implements PropertiesMapper {
                     value = doc.getName();
                 }
             } else if (prop.equals(WebDavConst.DAV_PROP_NAME)) {
+                // FIXME: this is wrong
                 value = doc.getTitle();
                 value = doc.getName();
 
@@ -174,7 +176,7 @@ public class DavPropertiesMapper implements PropertiesMapper {
         return davProps;
     }
 
-    public Map<String, String> getAllDavProperties(DocumentModel doc) {
+    public Map<String, String> getAllDavProperties(DocumentModel doc) throws ClientException {
         return getDavProperties(doc, getDavPropertiesNames(doc));
     }
 
