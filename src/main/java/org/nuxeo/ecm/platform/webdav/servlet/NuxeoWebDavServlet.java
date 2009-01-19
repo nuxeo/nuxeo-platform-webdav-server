@@ -19,6 +19,7 @@
 
 package org.nuxeo.ecm.platform.webdav.servlet;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -200,28 +201,52 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 		try {
 			DavLockInfo lockInfo = davRequest.extractLockInfo();
 
-			DocumentModel target = CoreHelper.resolveTarget(davRequest);
+			DocumentModel target = null;
+			try {
+				target = CoreHelper.resolveTarget(davRequest);
+			} catch (Exception ex) {
+				// do nothing
+			}
+
 			if (target == null) {
 
-				// int idx =
-				// CoreHelper.getDocumentPath(davRequest).lastIndexOf('/');
-				// final String fileName =
-				// CoreHelper.getDocumentPath(davRequest).substring(idx + 1);
-				// final String filePath =
-				// CoreHelper.getDocumentPath(davRequest).substring(0, idx);
-				//
-				// CoreSession session =
-				// CoreHelper.getAssociatedCoreSession(davRequest);
-				// target = session.createDocumentModel(filePath,
-				// IdUtils.generateId(fileName), "File");
-				// target.setPropertyValue("dc:title", fileName);
-				//
-				// session.createDocument(target);
-				// session.save();
+				int idx = CoreHelper.getDocumentPath(davRequest).lastIndexOf('/');
+				final String fileName = CoreHelper.getDocumentPath(davRequest).substring(idx + 1);
+				//final String filePath = CoreHelper.getDocumentPath(davRequest).substring(0, idx);
+
+				CoreSession session = CoreHelper.getAssociatedCoreSession(davRequest);
+//				target = session.createDocumentModel(filePath, IdUtils.generateId(fileName), "File");
+//				target.setPropertyValue("dc:title", fileName);
+
+				File tmpfile = File.createTempFile("NuxeoWebDavServlet", "tmp");
+				InputStream input = new ByteArrayInputStream(new byte[] { 'T', 'E', 'S', 'T' });
+				FileUtils.copyToFile(input, tmpfile);
+				StreamingBlob thefile = StreamingBlob.createFromFile(tmpfile);
+				thefile.setMimeType("text/html");
+
+				String path = CoreHelper.getDocumentPath(davRequest); // davRequest
+																		// .
+				String[] pathParts = path.split("/");
+				String fileNameL = pathParts[pathParts.length - 1];
+				String containerPath = (path + ' ').replace('/' + fileNameL + ' ', "/");
+
+				FileManager fm = null;
+				try {
+					fm = Framework.getService(FileManager.class);
+				} catch (Exception e) {
+					log.error("Unable to get FileManager : " + e.getMessage());
+					davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
+					return;
+				}
+
+				target = fm.createDocumentFromBlob(session, thefile, containerPath, true, fileName);
+
+				//target = session.createDocument(target);
+				session.save();
 
 				final String response = "<D:multistatus xmlns:D=\"DAV:\">" + "<D:lockdiscovery>" + "<D:activelock>" + "<D:locktype>" + "<D:write/></D:locktype>" + "<D:lockscope>"
 						+ "<D:exclusive/></D:lockscope>" + "<D:depth>0</D:depth>" + "<D:owner>admin</D:owner>" + "<D:timeout>Second-179</D:timeout>" + "<D:locktoken>" + "<D:href>opaquelocktoken:"
-						+ UUID.randomUUID() + ":Administrator</D:href>" + "</D:locktoken>" + "</D:activelock>" + "</D:lockdiscovery>" + "</D:multistatus>";
+						+ target.getId() + ":Administrator</D:href>" + "</D:locktoken>" + "</D:activelock>" + "</D:lockdiscovery>" + "</D:multistatus>";
 				davResponse.setStatus(WebDavConst.SC_OK);
 				OutputStream os = davResponse.getOutputStream();
 				os.write(response.getBytes());
@@ -244,11 +269,11 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
 		} catch (ClientException e) {
 			log.error(e);
-			davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
+			davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
 			return;
 		} catch (Exception e) {
 			log.error(e);
-			davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
+			davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
 			return;
 		}
 	}
@@ -537,11 +562,8 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 				davResponse.setStatus(WebDavConst.SC_CREATED);
 			}
 
-		} catch (ClientException e) {
-			davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
-			log.error(e.getMessage(), e);
 		} catch (Exception e) {
-			davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
+			davResponse.setStatus(WebDavConst.SC_NOT_FOUND);
 			log.error(e.getMessage(), e);
 		}
 	}
@@ -599,7 +621,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 				log.error("Error while copying blob to tmp file :" + e.getMessage());
 			}
 
-			Blob thefile = StreamingBlob.createFromFile(tmpfile);
+			StreamingBlob thefile = StreamingBlob.createFromFile(tmpfile);
 
 			thefile.setMimeType(davRequest.getContentType());
 
@@ -629,8 +651,12 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 				}
 
 				if (alreadyExist) {
-					URLResolverCache.removeFromCache(existingDoc);
-					session.removeDocument(existingDoc.getRef());
+					// URLResolverCache.removeFromCache(existingDoc);
+					// session.removeDocument(existingDoc.getRef());
+
+					existingDoc.setPropertyValue("file:content", thefile);
+					session.saveDocument(existingDoc);
+					session.save();
 				}
 
 				boolean overwrite = davRequest.getHeaderOverwrite();
