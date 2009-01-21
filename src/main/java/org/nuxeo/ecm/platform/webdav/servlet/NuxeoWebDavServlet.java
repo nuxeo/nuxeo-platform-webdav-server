@@ -699,9 +699,9 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                     session.save();
                 }
 
-//                boolean overwrite = davRequest.getHeaderOverwrite();
+                boolean overwrite = true;// davRequest.getHeaderOverwrite();
                 fm.createDocumentFromBlob(session, thefile, containerPath,
-                        true, fileName);
+                        overwrite, fileName);
                 session.save();
             } catch (Exception e) {
                 log.error("Error when creating the document via FileManager: "
