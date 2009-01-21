@@ -45,6 +45,7 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.PathRef;
+import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.api.impl.blob.StreamingBlob;
 import org.nuxeo.ecm.platform.filemanager.api.FileManager;
 import org.nuxeo.ecm.platform.locking.adapters.DavLockInfo;
@@ -228,39 +229,25 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                         '/');
                 final String fileName = CoreHelper.getDocumentPath(davRequest).substring(
                         idx + 1);
-                // final String filePath =
-                // CoreHelper.getDocumentPath(davRequest).substring(0, idx);
+                final String filePath = CoreHelper.getDocumentPath(davRequest).substring(
+                        0, idx);
 
                 CoreSession session = CoreHelper.getAssociatedCoreSession(davRequest);
-                // target = session.createDocumentModel(filePath,
-                // IdUtils.generateId(fileName), "File");
-                // target.setPropertyValue("dc:title", fileName);
+                target = session.createDocumentModel("File");
 
                 File tmpfile = File.createTempFile("NuxeoWebDavServlet", "tmp");
                 InputStream input = new ByteArrayInputStream(new byte[] { 'T',
                         'E', 'S', 'T' });
                 FileUtils.copyToFile(input, tmpfile);
-                StreamingBlob thefile = StreamingBlob.createFromFile(tmpfile);
-                thefile.setMimeType("text/html");
 
-                String path = CoreHelper.getDocumentPath(davRequest); // davRequest
-                // .
-                String[] pathParts = path.split("/");
-                String fileNameL = pathParts[pathParts.length - 1];
-                String containerPath = (path + ' ').replace(
-                        '/' + fileNameL + ' ', "/");
+                FileBlob thefile = new FileBlob(tmpfile,
+                        "application/octet-stream", null);
+                target.setProperty("file", "content", thefile);
+                target.setProperty("file", "filename", fileName);
+                target.setPropertyValue("dc:title", fileName);
+                target.setPathInfo(filePath, fileName);
 
-                FileManager fm = null;
-                try {
-                    fm = Framework.getService(FileManager.class);
-                } catch (Exception e) {
-                    log.error("Unable to get FileManager : " + e.getMessage());
-                    davResponse.setStatus(WebDavConst.SC_INTERNAL_SERVER_ERROR);
-                    return;
-                }
-
-                target = fm.createDocumentFromBlob(session, thefile,
-                        containerPath, true, fileName);
+                target = session.createDocument(target);
                 session.save();
             }
 
@@ -675,7 +662,6 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             }
 
             StreamingBlob thefile = StreamingBlob.createFromFile(tmpfile);
-
             thefile.setMimeType(davRequest.getContentType());
 
             DocumentModel existingDoc = null;

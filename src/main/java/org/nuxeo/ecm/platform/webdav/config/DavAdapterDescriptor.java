@@ -19,13 +19,15 @@
 
 package org.nuxeo.ecm.platform.webdav.config;
 
+import java.io.IOException;
+
 import org.nuxeo.common.xmap.annotation.XNode;
 import org.nuxeo.common.xmap.annotation.XObject;
 import org.nuxeo.ecm.platform.webdav.adapters.DavResourceAdapter;
 
 /**
  * Descriptor for WebDAV resource adapter contribution.
- *
+ * 
  * @author tiry
  */
 @XObject(value = "davAdapter")
@@ -48,6 +50,7 @@ public class DavAdapterDescriptor {
     }
 
     public void setAdapterClass(Class adapterClass) {
+
         this.adapterClass = adapterClass;
     }
 

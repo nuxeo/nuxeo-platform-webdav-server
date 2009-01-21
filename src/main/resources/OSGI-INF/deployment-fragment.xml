@@ -5,24 +5,6 @@
 			<java>${bundle.fileName}</java>
 		</module>
 	</extension>
-
-  <!-- Enable authentication for Dav requests -->
-<!--	<extension target="web#AUTH-FILTER">-->
-<!--		<filter>-->
-<!--			<display-name>Nuxeo Security Filter</display-name>-->
-<!--			<filter-name>CrappyClientDavFilter</filter-name>-->
-<!--			<filter-class>-->
-<!--				org.nuxeo.ecm.platform.webdav.servlet.CrappyClientDavFilter-->
-<!--			</filter-class>-->
-<!--		</filter>-->
-<!--		<filter-mapping>-->
-<!--			<filter-name>CrappyClientDavFilter</filter-name>-->
-<!--			<url-pattern>/*</url-pattern>-->
-<!--			<dispatcher>REQUEST</dispatcher>-->
-<!--		</filter-mapping>-->
-<!--	</extension>-->
-
-  <!-- DAV Servlet mapping -->
 	<extension target="web#SERVLET">
 		<servlet>
 			<servlet-name>Nuxeo WebDav Servlet</servlet-name>
