@@ -691,18 +691,17 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 }
 
                 if (alreadyExist) {
-                    // URLResolverCache.removeFromCache(existingDoc);
-                    // session.removeDocument(existingDoc.getRef());
 
                     existingDoc.setPropertyValue("file:content", thefile);
                     session.saveDocument(existingDoc);
                     session.save();
-                }
+                } else {
 
-                boolean overwrite = true;// davRequest.getHeaderOverwrite();
-                fm.createDocumentFromBlob(session, thefile, containerPath,
-                        overwrite, fileName);
-                session.save();
+                    boolean overwrite = davRequest.getHeaderOverwrite();
+                    fm.createDocumentFromBlob(session, thefile, containerPath,
+                            overwrite, fileName);
+                    session.save();
+                }
             } catch (Exception e) {
                 log.error("Error when creating the document via FileManager: "
                         + e.getMessage(), e);
