@@ -1,20 +1,40 @@
 <?xml version="1.0"?>
 <fragment>
-	<extension target="application#MODULE">
-		<module>
-			<java>${bundle.fileName}</java>
-		</module>
-	</extension>
-	<extension target="web#SERVLET">
-		<servlet>
-			<servlet-name>Nuxeo WebDav Servlet</servlet-name>
-			<servlet-class>
-				org.nuxeo.ecm.platform.webdav.servlet.NuxeoWebDavServlet
-			</servlet-class>
-		</servlet>
-		<servlet-mapping>
-			<servlet-name>Nuxeo WebDav Servlet</servlet-name>
-			<url-pattern>/dav/*</url-pattern>
-		</servlet-mapping>
-	</extension>
+  <extension target="application#MODULE">
+    <module>
+      <java>${bundle.fileName}</java>
+    </module>
+  </extension>
+
+  <!-- Enable authentication for Dav requests -->
+  <extension target="web#STD-AUTH-FILTER">
+    <filter>
+      <display-name>Nuxeo Security Filter</display-name>
+      <filter-name>NuxeoAuthenticationFilter</filter-name>
+      <filter-class>
+        org.nuxeo.ecm.platform.ui.web.auth.NuxeoAuthenticationFilter
+      </filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>NuxeoAuthenticationFilter</filter-name>
+      <url-pattern>/dav/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+  </extension>
+
+  <!-- DAV Servlet mapping -->
+  <extension target="web#SERVLET">
+    <servlet>
+      <servlet-name>Nuxeo WebDav Servlet</servlet-name>
+      <servlet-class>
+        org.nuxeo.ecm.platform.webdav.servlet.NuxeoWebDavServlet
+      </servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>Nuxeo WebDav Servlet</servlet-name>
+      <url-pattern>/dav/*</url-pattern>
+    </servlet-mapping>
+  </extension>
 </fragment>
+
