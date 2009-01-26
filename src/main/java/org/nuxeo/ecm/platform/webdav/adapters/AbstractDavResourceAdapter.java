@@ -30,7 +30,6 @@ import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
-import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.core.api.PagedDocumentsProvider;
 import org.nuxeo.ecm.core.search.api.client.query.QueryException;
 import org.nuxeo.ecm.core.search.api.client.querymodel.QueryModel;
@@ -91,9 +90,8 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         QueryModelService qmService = (QueryModelService) Framework.getRuntime().getComponent(
                 QueryModelService.NAME);
         QueryModelDescriptor qmd = qmService.getQueryModelDescriptor(qmName);
-        QueryModel qm = new QueryModel(qmd,
-                (NuxeoPrincipal) getSession().getPrincipal());
-        return qm.getResultsProvider(parameters.toArray(), null);
+        QueryModel qm = new QueryModel(qmd);
+        return qm.getResultsProvider(session, parameters.toArray(), null);
     }
 
     public String getURLPart(String data) {
