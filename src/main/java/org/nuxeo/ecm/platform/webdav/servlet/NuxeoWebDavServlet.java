@@ -215,7 +215,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
         log.debug("doLock");
         try {
             DavLockInfo lockInfo = davRequest.extractLockInfo();
-
+            CoreSession session = CoreHelper.getAssociatedCoreSession(davRequest);
             DocumentModel target = null;
             try {
                 target = CoreHelper.resolveTarget(davRequest);
@@ -232,7 +232,6 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 final String filePath = CoreHelper.getDocumentPath(davRequest).substring(
                         0, idx);
 
-                CoreSession session = CoreHelper.getAssociatedCoreSession(davRequest);
                 target = session.createDocumentModel("File");
 
                 File tmpfile = File.createTempFile("NuxeoWebDavServlet", "tmp");
@@ -265,10 +264,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                         + "<D:lockscope>" + "<D:exclusive/></D:lockscope>"
                         + "<D:depth>0</D:depth>" + "<D:owner>admin</D:owner>"
                         + "<D:timeout>Second-179</D:timeout>" + "<D:locktoken>"
-                        + "<D:href>opaquelocktoken:" + target.getId()
-                        + ":Administrator</D:href>" + "</D:locktoken>"
-                        + "</D:activelock>" + "</D:lockdiscovery>"
-                        + "</D:multistatus>";
+                        + "<D:href>opaquelocktoken:" + target.getId() + ":"
+                        + session.getPrincipal().getName() + "</D:href>"
+                        + "</D:locktoken>" + "</D:activelock>"
+                        + "</D:lockdiscovery>" + "</D:multistatus>";
                 davResponse.setStatus(WebDavConst.SC_OK);
                 OutputStream os = davResponse.getOutputStream();
                 os.write(response.getBytes());
