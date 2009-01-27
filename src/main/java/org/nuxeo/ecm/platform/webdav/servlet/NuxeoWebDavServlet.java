@@ -247,11 +247,11 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 target.setPathInfo(filePath, fileName);
 
                 target = session.createDocument(target);
-                session.save();
+                // session.save();
             }
 
             LockableDocument lockableDoc = target.getAdapter(LockableDocument.class);
-            int result = lockableDoc.lock("Administrator");
+            int result = lockableDoc.lock(session.getPrincipal().getName());
 
             if (result >= 0) {
                 LockInfo nxLockInfo = lockableDoc.getLockInfo();
@@ -262,7 +262,8 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                         + "<D:lockdiscovery>" + "<D:activelock>"
                         + "<D:locktype>" + "<D:write/></D:locktype>"
                         + "<D:lockscope>" + "<D:exclusive/></D:lockscope>"
-                        + "<D:depth>0</D:depth>" + "<D:owner>admin</D:owner>"
+                        + "<D:depth>0</D:depth>" + "<D:owner>"
+                        + session.getPrincipal().getName() + "</D:owner>"
                         + "<D:timeout>Second-179</D:timeout>" + "<D:locktoken>"
                         + "<D:href>opaquelocktoken:" + target.getId() + ":"
                         + session.getPrincipal().getName() + "</D:href>"
