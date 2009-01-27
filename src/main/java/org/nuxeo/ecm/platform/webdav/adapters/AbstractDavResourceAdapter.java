@@ -43,7 +43,7 @@ import org.nuxeo.runtime.api.Framework;
 
 /**
  * Base class for DAV resources adapters.
- *
+ * 
  * @author tiry
  */
 public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
@@ -87,13 +87,14 @@ public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {
         return session;
     }
 
-    protected PagedDocumentsProvider execQueryModel() throws ClientException, QueryException {
+    protected PagedDocumentsProvider execQueryModel() throws ClientException,
+            QueryException {
         QueryModelService qmService = (QueryModelService) Framework.getRuntime().getComponent(
                 QueryModelService.NAME);
         QueryModelDescriptor qmd = qmService.getQueryModelDescriptor(qmName);
-        QueryModel qm = new QueryModel(qmd,
-                (NuxeoPrincipal) getSession().getPrincipal());
-        return qm.getResultsProvider(parameters.toArray(), null);
+
+        QueryModel qm = new QueryModel(qmd);
+        return qm.getResultsProvider(getSession(), parameters.toArray());
     }
 
     public String getURLPart(String data) {
