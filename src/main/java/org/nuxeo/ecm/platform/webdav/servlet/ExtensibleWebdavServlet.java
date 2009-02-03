@@ -47,6 +47,7 @@ public class ExtensibleWebdavServlet extends HttpServlet {
         throws ServletException, IOException {
 
         String method = req.getMethod();
+        String requri = req.getRequestURI();
 
         // force session creation, because some clients are too dummy
         req.getSession(true);

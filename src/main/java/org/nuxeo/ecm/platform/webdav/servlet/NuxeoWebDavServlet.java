@@ -187,8 +187,10 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
             }
             try {
                 for (DocumentModel child : session.getChildren(doc.getRef())) {
-                    writeProperties(davResponse, requestedProperties, child,
-                            maxDepth, depth + 1, davRequest);
+                    if (!"deleted".equals(child.getCurrentLifeCycleState())) {
+                        writeProperties(davResponse, requestedProperties,
+                                child, maxDepth, depth + 1, davRequest);
+                    }
                 }
             } catch (ClientException e) {
                 log.error("Error while writing properties in XML Body : "
@@ -247,11 +249,18 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                 target.setPathInfo(filePath, fileName);
 
                 target = session.createDocument(target);
-                // session.save();
+                session.save();
             }
 
+            int result = 0;
             LockableDocument lockableDoc = target.getAdapter(LockableDocument.class);
-            int result = lockableDoc.lock(session.getPrincipal().getName());
+            try {
+                result = lockableDoc.lock(session.getPrincipal().getName());
+            } catch (Exception e) {
+
+                log.error("Failed to lock.");
+                log.error(e);
+            }
 
             if (result >= 0) {
                 LockInfo nxLockInfo = lockableDoc.getLockInfo();
@@ -615,9 +624,8 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
     protected void doPut(WebDavRequestWrapper davRequest,
             WebDavResponseWrapper davResponse) {
 
-        String path = CoreHelper.getDocumentPath(davRequest); // davRequest.
-        // getRelativePath
-        // ();
+        String path = CoreHelper.getDocumentPath(davRequest);
+
         String[] pathParts = path.split("/");
         String fileName = pathParts[pathParts.length - 1];
         String containerPath = (path + ' ').replace('/' + fileName + ' ', "/");
