@@ -36,7 +36,7 @@ public class TestDavLock extends AbstractWebDavRequestTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         deployContrib("org.nuxeo.ecm.platform.webdav","OSGI-INF/LockAdapters.xml");
         URLResolverCache.resetCache();

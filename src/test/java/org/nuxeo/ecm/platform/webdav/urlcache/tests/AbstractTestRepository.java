@@ -40,7 +40,7 @@ public abstract class AbstractTestRepository extends RepositoryOSGITestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
 
         // deploy("EventService.xml");

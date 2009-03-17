@@ -78,7 +78,7 @@ public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCa
     }
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
 
         folder3.setProperty("dublincore", "description", DESCRIPTION);

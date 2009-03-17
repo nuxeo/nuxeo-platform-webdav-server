@@ -34,7 +34,7 @@ public class TestDavPUT extends AbstractWebDavRequestTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
 
         deployBundle("org.nuxeo.ecm.platform.mimetype.api");
