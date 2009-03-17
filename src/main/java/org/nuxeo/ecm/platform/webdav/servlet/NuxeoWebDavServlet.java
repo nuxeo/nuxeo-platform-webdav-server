@@ -60,7 +60,7 @@ import org.nuxeo.runtime.api.Framework;
 
 /**
  * Nuxeo WebDAV Servlet.
- * 
+ *
  * @author tiry
  */
 public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
@@ -154,7 +154,7 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
                      * if (davRequest.skipLevel0ForListing()) { boolean
                      * canSkip=false; // check if we can skip Level0 Listing if
                      * (depth==0 && !maxDepth.equals("0") && doc.isFolder()) {
-                     * 
+                     *
                      * } } else davResponse.addProperties(getRessourceURL(doc,
                      * davRequest, depth), schemaURI, emptyProps);
                      */

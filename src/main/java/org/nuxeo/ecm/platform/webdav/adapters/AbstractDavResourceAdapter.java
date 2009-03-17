@@ -43,7 +43,7 @@ import org.nuxeo.runtime.api.Framework;
 
 /**
  * Base class for DAV resources adapters.
- * 
+ *
  * @author tiry
  */
 public abstract class AbstractDavResourceAdapter implements DavResourceAdapter {

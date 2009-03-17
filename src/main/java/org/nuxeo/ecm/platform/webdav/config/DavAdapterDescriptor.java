@@ -27,7 +27,7 @@ import org.nuxeo.ecm.platform.webdav.adapters.DavResourceAdapter;
 
 /**
  * Descriptor for WebDAV resource adapter contribution.
- * 
+ *
  * @author tiry
  */
 @XObject(value = "davAdapter")
