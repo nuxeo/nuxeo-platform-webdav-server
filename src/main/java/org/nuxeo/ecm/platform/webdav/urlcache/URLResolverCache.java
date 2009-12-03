@@ -28,10 +28,9 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.platform.webdav.servlet.NuxeoWebDavServlet;
 
 /**
- * Cache for URL => document resolution
- *
- * This cache is usefull because URL resolution may be costly.
- *
+ * Cache for URL => document resolution.
+ * <p>
+ * This cache is useful because URL resolution may be costly.
  *
  * @author tiry
  */
@@ -77,9 +76,6 @@ public class URLResolverCache {
 
     /**
      * Adds alternative URLs based on the registered parent URLs.
-     *
-     * @param url
-     * @param doc
      */
     private static void addAlternativeURLs(String url, DocumentModel doc) {
         DocumentRef parentRef = doc.getParentRef();

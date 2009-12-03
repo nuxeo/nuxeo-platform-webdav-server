@@ -64,8 +64,8 @@ public class NuxeoLockableDocument implements LockableDocument {
     public boolean isLockExpired() throws ClientException {
         LockInfo lockInfo = getLockInfo();
 
-        float lockAgeInHour = (new Date().getTime() - lockInfo.getLockDate().getTime())
-                / (3600 * 1000);
+        double lockAgeInHour = (new Date().getTime() - lockInfo.getLockDate().getTime())
+                / (3600.0 * 1000.0);
 
         return lockAgeInHour > LOCK_TIMEOUT_IN_HOURS;
     }
@@ -93,9 +93,7 @@ public class NuxeoLockableDocument implements LockableDocument {
     public int lock(String userName) throws ClientException {
 
         LockInfo lockInfo = getLockInfo();
-
         boolean canLock = false;
-
         int returnCode = LOCKED_OK;
 
         if (lockInfo != null) {
@@ -130,9 +128,7 @@ public class NuxeoLockableDocument implements LockableDocument {
     public int unlock(String userName) throws ClientException {
 
         LockInfo lockInfo = getLockInfo();
-
         boolean canUnLock = false;
-
         int returnCode = NOT_LOCKED;
 
         if (lockInfo != null) {

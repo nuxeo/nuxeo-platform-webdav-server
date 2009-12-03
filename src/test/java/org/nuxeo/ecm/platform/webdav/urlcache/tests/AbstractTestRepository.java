@@ -31,7 +31,7 @@ public abstract class AbstractTestRepository extends RepositoryOSGITestCase {
 
     protected RuntimeService runtime;
 
-    public AbstractTestRepository(String name) {
+    protected AbstractTestRepository(String name) {
         super(name);
     }
 

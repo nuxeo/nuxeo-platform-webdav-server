@@ -62,22 +62,19 @@ public class WebDavConfigurationService extends DefaultComponent {
         davAdapterDescriptors = null;
     }
 
-    private void mergeClientDescriptors(
+    private static void mergeClientDescriptors(
             WebDavClientConfigurationDescriptor newContrib) {
-
         WebDavClientConfigurationDescriptor oldDescriptor = clientConfigDescriptors.get(newContrib.getName());
 
         // Enable/Disable
         if (newContrib.getEnabled() != null) {
             oldDescriptor.setEnabled(newContrib.getEnabled());
         }
-
     }
 
     @Override
     public void registerContribution(Object contribution,
             String extensionPoint, ComponentInstance contributor) {
-
         if (extensionPoint.equals(CLIENT_CONFIGURATION_EP)) {
             WebDavClientConfigurationDescriptor config = (WebDavClientConfigurationDescriptor) contribution;
             registerClientConfig(config, contributor);
@@ -87,13 +84,11 @@ public class WebDavConfigurationService extends DefaultComponent {
         } else {
             log.error("Extension point " + extensionPoint + "is unknown");
         }
-
     }
 
     public void registerClientConfig(
             WebDavClientConfigurationDescriptor config,
             ComponentInstance contributor) {
-
         if (clientConfigDescriptors.containsKey(config.getName())) {
             mergeClientDescriptors(config);
             log.debug("merged WebDav client configuration descriptor: "
@@ -107,7 +102,6 @@ public class WebDavConfigurationService extends DefaultComponent {
 
     public void registerDavAdapter(DavAdapterDescriptor davAdapter,
             ComponentInstance contributor) {
-
         davAdapterDescriptors.put(davAdapter.getTypeName(), davAdapter);
         log.debug("registered WebDav Adapterdescriptor: "
                 + davAdapter.getName());

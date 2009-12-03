@@ -112,7 +112,7 @@ public class FileBasedDavResourceAdapter extends AbstractDavResourceAdapter {
         super.rename(getFileNameWithoutExtension(title));
     }
 
-    private String getFileNameWithoutExtension(String fileName) {
+    private static String getFileNameWithoutExtension(String fileName) {
         Path path = new Path(fileName);
         return path.removeFileExtension().toString();
     }

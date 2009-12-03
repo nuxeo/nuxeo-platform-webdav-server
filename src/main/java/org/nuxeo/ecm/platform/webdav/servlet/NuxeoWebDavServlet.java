@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +62,6 @@ import org.nuxeo.runtime.api.Framework;
 public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
     public static final String PATTERN = "/nuxeo/dav/";
-
     public static final String GET_PARAMETER_DECORATOR = "displayName";
 
     private static final long serialVersionUID = 876875851L;
@@ -351,8 +350,8 @@ public class NuxeoWebDavServlet extends ExtensibleWebdavServlet {
 
         TypeInfo typeAdapter = parent.getAdapter(TypeInfo.class);
         if (typeAdapter != null) {
-            List<String> allowedTypes = new ArrayList<String>(
-                    Arrays.asList(typeAdapter.getAllowedSubTypes()));
+
+            Set<String> allowedTypes = typeAdapter.getAllowedSubTypes().keySet();
 
             if (!allowedTypes.contains(targetType)) {
                 log.error("Can not create type " + targetType

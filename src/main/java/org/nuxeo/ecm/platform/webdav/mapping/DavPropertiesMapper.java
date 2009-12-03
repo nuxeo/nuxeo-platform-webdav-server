@@ -29,8 +29,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.platform.webdav.adapters.DavResourceAdapter;
 import org.nuxeo.ecm.platform.webdav.helpers.MappingHelper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavConst;

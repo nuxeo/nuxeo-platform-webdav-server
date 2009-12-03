@@ -45,35 +45,28 @@ import org.nuxeo.ecm.platform.webdav.urlcache.URLResolverCache;
 public abstract class TestNuxeoDavProperties extends AbstractWebDavRequestTestCase {
 
     private static final String DESCRIPTION = "This is a test description";
-
     private static final String SOURCE = "This is a test source";
 
     private static final Calendar created = new GregorianCalendar();
-
     private static final Calendar modified = new GregorianCalendar();
 
     private static final String DC_SCHEMA_PREFIX = "dc";
-
     private static final String DC_SCHEMA_URL = "http://www.nuxeo.org/dublincore/";
 
     private static final QName createdTag = DocumentFactory.getInstance().createQName(
             "created", DC_SCHEMA_PREFIX, DC_SCHEMA_URL);
-
     private static final QName modifiedTag = DocumentFactory.getInstance().createQName(
             "modified", DC_SCHEMA_PREFIX, DC_SCHEMA_URL);
-
     private static final QName descriptionTag = DocumentFactory.getInstance().createQName(
             "description", DC_SCHEMA_PREFIX, DC_SCHEMA_URL);
-
     private static final QName sourceTag = DocumentFactory.getInstance().createQName(
             "source", DC_SCHEMA_PREFIX, DC_SCHEMA_URL);
-
     private static final QName contributorsTag = DocumentFactory.getInstance().createQName(
             "contributors", DC_SCHEMA_PREFIX, DC_SCHEMA_URL);
 
     private final List<String> contributors = new ArrayList<String>();
 
-    public TestNuxeoDavProperties(String name) {
+    protected TestNuxeoDavProperties(String name) {
         super(name);
     }
 

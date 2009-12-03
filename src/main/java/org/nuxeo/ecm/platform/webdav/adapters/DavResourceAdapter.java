@@ -19,8 +19,8 @@
 
 package org.nuxeo.ecm.platform.webdav.adapters;
 
-import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavRequestWrapper;
 import org.nuxeo.ecm.platform.webdav.servlet.WebDavResponseWrapper;
 
