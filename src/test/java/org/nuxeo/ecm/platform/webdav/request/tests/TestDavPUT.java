@@ -40,6 +40,9 @@ public class TestDavPUT extends AbstractWebDavRequestTestCase {
         deployBundle("org.nuxeo.ecm.platform.mimetype.api");
         deployBundle("org.nuxeo.ecm.platform.mimetype.core");
 
+        deployBundle("org.nuxeo.ecm.platform.types.api");
+        deployBundle("org.nuxeo.ecm.platform.types.core");
+
         deployBundle("org.nuxeo.ecm.platform.filemanager.api");
         deployBundle("org.nuxeo.ecm.platform.filemanager.core");
 
